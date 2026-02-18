@@ -21,12 +21,11 @@ requirements:
     - libgomp      # [linux]
     - cmake
     - make  # [unix]
-
   host:
-    - fftw
-
+    - fftw * *{{ mpi }}*
+    - {{ mpi }}
   run:
-    - fftw
+    - fftw * *{{ mpi }}*
 
 test:
   commands:
