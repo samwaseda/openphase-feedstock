@@ -1,5 +1,5 @@
 {% set name = "openphase" %}
-{% set version = "1.0.0" %}  # replace with actual tagged version
+{% set version = "2.0.0" %}  # replace with actual tagged version
 
 package:
   name: {{ name|lower }}
@@ -41,4 +41,5 @@ about:
 
 extra:
   recipe-maintainers:
+    - jan-janssen
     - samwaseda
