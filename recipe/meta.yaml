@@ -1,16 +1,13 @@
 {% set name = "openphase" %}
-{% set version = "1.0.1" %}
-{% set versionstr = version.replace('.', '_') %}
+{% set version = "2.0" %}
 
 package:
   name: {{ name|lower }}
   version: {{ version }}
 
 source:
-  url: https://openphase.rub.de/assets/download/OpenPhase-V{{ versionstr }}.zip
-  sha256: f91923947afcff4e6b41073954ddc782734ccbfed258985b2f16828f90fa9f8c
-  patches:
-    - make.patch
+  url: https://github.com/ICAMS/OpenPhase/archive/Release/{{ version }}.tar.gz
+  sha256: 10d738d6cf2942e599f87c3f12c9c653cef681cb13eabb81461fe1d372f5160d
 
 build:
   number: 0
@@ -18,40 +15,32 @@ build:
 
 requirements:
   build:
-    - make
     - {{ compiler('cxx') }}
+    - {{ stdlib('c') }}
     - llvm-openmp  # [osx]
     - libgomp      # [linux]
+    - cmake
+    - make  # [unix]
   host:
-    - fftw * *{{ mpi }}*
-    - {{ mpi }}
+    - fftw
   run:
-    - fftw * *{{ mpi }}*
+    - fftw
 
 test:
   commands:
-    - test -f ${PREFIX}/lib/libOpenPhase.a
-    - test -f ${PREFIX}/lib/libOpenPhaseMPI.a
+    # adapt to an actual installed binary or library
+    - test -f $PREFIX/bin/openphase || test -f $PREFIX/lib/libOpenPhase.so  # [unix]
 
 about:
-  home: https://openphase.rub.de/
-  summary: 'OpenPhase is based on the multi-phase-field model as developed by Steinbach and his co-workers'
+  home: https://github.com/ICAMS/OpenPhase
+  summary: "High-performance phase-field simulation framework for materials science"
   description: |
-    OpenPhase is an open-source C++ software project started in 2008 at 
-    the Interdisciplinary Centre for Advanced Materials Simulation, 
-    Ruhr-Universität Bochum, Germany. OpenPhase is dedicated to 
-    investigating microstructure evolution in materials undergoing 
-    first-order phase transformations, capillarity-driven coarsening 
-    processes, or a combination of both. Also you may embed the 
-    simulation into a macroscopic process simulation which determine 
-    boundary conditions on the micro domain, heat fluxed, mechanical 
-    loading or others.
-  license: GPL-3.0
-  license_family: GPL
+    OpenPhase is a modular, high-performance phase-field simulation framework
+    for modeling microstructure evolution in materials science.
+  license: GPL-3.0-only
   license_file: LICENSE
-  doc_url: https://openphase.rub.de/documentation/index.html
-  dev_url: https://openphase.rub.de/
 
 extra:
   recipe-maintainers:
     - jan-janssen
+    - samwaseda
