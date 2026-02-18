@@ -22,10 +22,9 @@ requirements:
     - cmake
     - make  # [unix]
   host:
-    - fftw * *{{ mpi }}*
-    - {{ mpi }}
+    - fftw
   run:
-    - fftw * *{{ mpi }}*
+    - fftw
 
 test:
   commands:
