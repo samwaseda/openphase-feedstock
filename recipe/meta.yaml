@@ -17,6 +17,8 @@ requirements:
   build:
     - {{ compiler('cxx') }}
     - {{ stdlib('c') }}
+    - llvm-openmp  # [osx]
+    - libgomp      # [linux]
     - cmake
     - make  # [unix]
 
