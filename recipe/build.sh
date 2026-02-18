@@ -1,5 +1,12 @@
-#!/bin/bash
-make SETTINGS="serial" CXX=${CXX} CXXFLAGS="${CXXFLAGS}"
-make SETTINGS="mpi-parallel" CXXFLAGS="${CXXFLAGS}"
-cp -r include/* ${PREFIX}/include
-cp -r lib/* ${PREFIX}/lib
+#!/usr/bin/env bash
+set -euxo pipefail
+
+mkdir build
+cd build
+
+cmake .. \
+  -DCMAKE_BUILD_TYPE=Release \
+  -DCMAKE_INSTALL_PREFIX=${PREFIX}
+
+make -j${CPU_COUNT}
+make install
